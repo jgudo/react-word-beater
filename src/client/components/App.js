@@ -4,7 +4,7 @@ import word from '../helpers/random-word';
 export default class App extends Component {
   state = {
     gameStarted: false,
-    currentWord: '',
+    currentWord: undefined,
     typedValue: '',
     score: 0,
     level: 1,
@@ -19,9 +19,9 @@ export default class App extends Component {
       currentWord, 
       typedValue, 
       plusScore, 
-      timerBase 
+      timerBase
     } = this.state;
-    
+
     if (typedValue === currentWord) {
       this.setState(prevState => ({
         currentWord: word(),
@@ -36,7 +36,9 @@ export default class App extends Component {
     this.setState(() => ({ 
       gameStarted: true,
       gameOver: false,
-      currentWord: word()
+      currentWord: word(),
+      score: 0,
+      level: 1
     }));
 
     document.addEventListener('click', (e) => {
@@ -52,15 +54,16 @@ export default class App extends Component {
   initTimer = () => {
     const gameTimer = setInterval(() => {
       this.setState(() => ({ timer: this.state.timer - 1 }));
-      if (this.state.timer <= 0) {
+      if (this.state.timer <= 0 || this.state.gameOver) {
         clearInterval(gameTimer);
         this.setState(() => ({ 
           gameOver: true,
           gameStarted: false, 
-          timer: 10,
-          typedValue: '' 
+          timer: 20,
+          typedValue: '',
+          currentWord: undefined
         }));
-      } 
+      }  
     }, 1000);
   }
   
@@ -70,14 +73,28 @@ export default class App extends Component {
   };
 
   render() {
+    const { 
+      gameStarted,
+      gameOver, 
+      currentWord,
+      timer,
+      score,
+      typedValue,
+      level
+    } = this.state;
     return (
       <div>
-        {!this.state.gameStarted && (
+        {(!gameStarted && !gameOver) && (
           <div className="beater__main">
-            <h1>Word Beater</h1>
-            <p>Do you have what is takes to become the fastest and accurate typist?</p>
-            <p>Type every single word correctly in a given time limit to become a master of word beater!</p>
+            <h1 className="beater__main-title">Word Beater</h1>
+            <p className="beater__main-subtitle">
+              Do you have what is takes to become the fastest and accurate typist?
+            </p>
+            <p className="beater__main-subtitle">
+              Type every single word correctly in a given time limit to become a master of word beater!
+            </p>
             <button
+              className="beater__main-start-button"
               onClick={this.initGame}
             >
             Start Game
@@ -85,19 +102,41 @@ export default class App extends Component {
           </div>
         )}
 
-        {this.state.gameStarted && (
-          <div>
-            <h1>{this.state.currentWord}</h1>
-            <span>Seconds Remaining: </span><h4>{this.state.timer}</h4>
+        {gameStarted && (
+          <div className="beater__game">
+            <h1 className="beater__game-current">{currentWord}</h1>
+            <h4>
+              <span>Seconds Remaining: </span>
+              {timer}
+            </h4>
+            <h4>
+              <span>Score:</span>
+              {score}
+            </h4>
             <input
               autoFocus
+              className="beater__game-input"
               onChange={this.onTypeHandler}
               /* eslint-disable */
               ref={el => this.wordTypeInput = el} 
               /* eslint-enable */
-              value={this.state.typedValue}
+              value={typedValue}
               type="text"
             />
+          </div>
+        )}
+
+        {gameOver && (
+          <div className="beater__gameover">
+            <h1>Game Over</h1>
+            <h2>Your Final Score: {score}</h2>
+            <h2>Level Reached: {level}</h2>
+            <button
+              className="beater__main-start-button"
+              onClick={this.initGame}
+            >
+            Try Again
+            </button>
           </div>
         )}
       </div>

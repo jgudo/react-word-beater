@@ -7,7 +7,7 @@ import App from './components/App';
 
 WebFont.load({
   google: {
-    families: ['Muli']
+    families: ['Muli: 400, 700, 900']
   }
 });
 

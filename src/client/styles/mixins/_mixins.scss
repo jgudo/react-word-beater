@@ -1,0 +1,13 @@
+@mixin linearGradient($deg, $top, $bottom) {
+  background: rgb(155,27,234);
+  background: -moz-linear-gradient($deg, $top 15%, $bottom 100%);
+  background: -webkit-linear-gradient($deg, $top 15%, $bottom 100%);
+  background: linear-gradient($deg, $top 15%, $bottom 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=$top,endColorstr=$top,GradientType=1);
+}
+
+@mixin boxShadow($color) {
+  -webkit-box-shadow:0 0 50px transparentize($color, .5); 
+  -moz-box-shadow: 0 0 50px transparentize($color, .5); 
+  box-shadow:0 0 50px transparentize($color, .5);
+}
