@@ -14,21 +14,54 @@ export default class App extends Component {
     gameOver: false
   };
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const { 
       currentWord, 
-      typedValue, 
-      plusScore, 
+      typedValue,
+      plusScore,
+      score,
       timerBase
     } = this.state;
 
     if (typedValue === currentWord) {
-      this.setState(prevState => ({
+      this.setState(() => ({
         currentWord: word(),
         typedValue: '',
         score: prevState.score + plusScore,
         timer: timerBase
       }));
+
+      if (score >= 490) {
+        this.setState(() => ({
+          timerBase: 15,
+          level: 2,
+          timer: 15
+        }));
+      } else if (score >= 1190) {
+        this.setState(() => ({
+          timerBase: 12,
+          level: 3, 
+          timer: 12
+        }));
+      } else if (score >= 2490) {
+        this.setState(() => ({
+          timerBase: 9,
+          level: 4, 
+          timer: 9
+        }));
+      } else if (score >= 3990) {
+        this.setState(() => ({
+          timerBase: 6,
+          level: 5, 
+          timer: 6
+        }));
+      } else if (score >= 4490) {
+        this.setState(() => ({
+          timerBase: 3,
+          level: 6, 
+          timer: 3
+        }));
+      }
     }
   }
 
@@ -68,7 +101,7 @@ export default class App extends Component {
   }
   
   onTypeHandler = (e) => {
-    const input = e.target.value;
+    const input = e.target.value.toLowerCase().trim();
     this.setState(() => ({ typedValue: input }));
   };
 
@@ -110,6 +143,10 @@ export default class App extends Component {
               {timer}
             </h4>
             <h4>
+              <span>Level:</span>
+              {level}
+            </h4>
+            <h4>
               <span>Score:</span>
               {score}
             </h4>
@@ -128,7 +165,7 @@ export default class App extends Component {
 
         {gameOver && (
           <div className="beater__gameover">
-            <h1>Game Over</h1>
+            <h1 className="beater__gameover-title">Game Over</h1>
             <h2>Your Final Score: {score}</h2>
             <h2>Level Reached: {level}</h2>
             <button

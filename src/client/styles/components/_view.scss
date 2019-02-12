@@ -29,7 +29,7 @@
     font-weight: 700;
     border-radius: 20px;
     margin-top: $padding-xl;
-    padding: $padding-sm $padding-md;
+    padding: $padding-sm $padding-xl;
     font-size: $font-xs;
     @include linearGradient(180deg, $pink, $purple);
     @include boxShadow($pink);
@@ -76,4 +76,9 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  &-title {
+    @extend .beater__main-title;
+    text-transform: lowercase;
+  }
 }
