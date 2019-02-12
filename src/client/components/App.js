@@ -5,6 +5,13 @@ import Game from './Game';
 import GameOver from './GameOver';
 
 export default class App extends Component {
+  constructor() {
+    super();
+
+    this.gameOverAudio = new Audio('/audios/gameover.mp3');
+    this.correctWordAudio = new Audio('/audios/correct.mp3');
+  }
+
   state = {
     gameStarted: false,
     currentWord: undefined,
@@ -16,6 +23,7 @@ export default class App extends Component {
     plusScore: 10,
     gameOver: false,
     correct: false,
+    audioMuted: false,
     greet: ''
   };
 
@@ -25,7 +33,8 @@ export default class App extends Component {
       typedValue,
       plusScore,
       score,
-      timerBase
+      timerBase,
+      audioMuted
     } = this.state;
 
     if (typedValue === currentWord) {
@@ -36,7 +45,9 @@ export default class App extends Component {
         timer: timerBase,
         correct: true
       }));
-
+      // play audio
+      if (!audioMuted) this.correctWordAudio.play();
+      // Show greet
       this.showGreet();
 
       if (score >= 490) {
@@ -45,7 +56,7 @@ export default class App extends Component {
           level: 2,
           timer: 15
         }));
-      } else if (score >= 1190) {
+      } else if (score >= 1490) {
         this.setState(() => ({
           timerBase: 12,
           level: 3, 
@@ -106,6 +117,7 @@ export default class App extends Component {
           greet: '',
           correct: false
         }));
+        if (!this.state.audioMuted) this.gameOverAudio.play();
       }  
     }, 1000);
   }
@@ -140,16 +152,21 @@ export default class App extends Component {
     }));
   };
 
+  audioHandler = () => {
+    this.setState(prevState => ({ audioMuted: !prevState.audioMuted }));
+  };
+
   render() {
     const { 
       gameStarted,
       gameOver, 
       score,
-      level
+      level,
+      audioMuted
     } = this.state;
 
     return (
-      <div>
+      <div className="beater">
         {(!gameStarted && !gameOver) && (
           <MainScreen initGame={this.initGame} />
         )}
@@ -172,6 +189,25 @@ export default class App extends Component {
             initGame={this.initGame}
           />
         )}
+
+        <div className="beater__audio-control">
+          <span>MUSIC</span>
+          <div 
+            className="beater__audio-control-wrapper"
+            onClick={this.audioHandler}
+            style={{
+              background: audioMuted ? 'rgba(255, 255, 255, .2)' : 'rgba(153,218,0, .2)'
+            }}
+          >
+            <div 
+              className="beater__audio-control-toggle"
+              style={{
+                transform: audioMuted ? 'translateX(0)' : 'translateX(100%)',
+                background: audioMuted ? '#cacaca' : '#99da00'
+              }}
+            ></div>
+          </div>
+        </div>
       </div>
     );
   }

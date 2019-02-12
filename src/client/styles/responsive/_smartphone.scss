@@ -1,0 +1,39 @@
+@media (max-width: 425px) {
+
+  .beater__main {
+    width: 90%;
+
+    &-title {
+      font-size: $font-l;
+    }
+  }
+
+  .beater__game {
+
+    &-wrapper {
+      width: 90%;
+    }
+
+    &-widgets {
+      width: 95%;
+      padding: $padding-sm 0;
+    }
+
+    &-current {
+      padding: $padding-xs 0;
+    }
+
+    &-input {
+      width: 90%;
+      font-size: $font-sm;
+
+      &::-webkit-input-placeholder {
+        font-size: $font-xs;
+      }
+    }
+  }
+
+  .beater__gameover {
+    width: 90%;
+  }
+}
