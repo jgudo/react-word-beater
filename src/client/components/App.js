@@ -10,6 +10,8 @@ export default class App extends Component {
 
     this.gameOverAudio = new Audio('/audios/gameover.mp3');
     this.correctWordAudio = new Audio('/audios/correct.mp3');
+    this.mainSound = new Audio('./audios/happy.mp3');
+    this.mainSound.volume = 0.1;
   }
 
   state = {
@@ -26,6 +28,12 @@ export default class App extends Component {
     audioMuted: false,
     greet: ''
   };
+
+  componentWillMount() {
+    if (!this.state.audioMuted) {
+      this.mainSound.play();
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { 
@@ -46,7 +54,10 @@ export default class App extends Component {
         correct: true
       }));
       // play audio
-      if (!audioMuted) this.correctWordAudio.play();
+      if (!audioMuted) {
+        this.correctWordAudio.currentTime = 0;
+        this.correctWordAudio.play();
+      }
       // Show greet
       this.showGreet();
 
@@ -82,8 +93,15 @@ export default class App extends Component {
         }));
       }
     }
-  }
 
+    if (audioMuted) {
+      this.mainSound.pause();
+      this.mainSound.currentTime = 0;
+    } else {
+      this.mainSound.play();
+    }
+  }
+ 
   initGame = () => {
     this.setState(() => ({ 
       gameStarted: true,
@@ -92,6 +110,7 @@ export default class App extends Component {
       score: 0,
       level: 1
     }));
+    this.mainSound.volume = 0.05;
 
     document.addEventListener('click', (e) => {
       // console.log(e.target);
