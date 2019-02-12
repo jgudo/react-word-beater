@@ -11,3 +11,9 @@
   -moz-box-shadow: 0 0 50px transparentize($color, .5); 
   box-shadow:0 0 50px transparentize($color, .5);
 }
+
+@mixin textShadow($color) {
+  -webkit-text-shadow:0 0 50px transparentize($color, .5); 
+  -moz-text-shadow: 0 0 50px transparentize($color, .5); 
+  text-shadow:0 0 50px transparentize($color, .5);
+}

@@ -137,29 +137,42 @@ export default class App extends Component {
 
         {gameStarted && (
           <div className="beater__game">
-            <h1 className="beater__game-current">{currentWord}</h1>
-            <h4>
-              <span>Seconds Remaining: </span>
-              {timer}
-            </h4>
-            <h4>
-              <span>Level:</span>
-              {level}
-            </h4>
-            <h4>
-              <span>Score:</span>
-              {score}
-            </h4>
-            <input
-              autoFocus
-              className="beater__game-input"
-              onChange={this.onTypeHandler}
-              /* eslint-disable */
-              ref={el => this.wordTypeInput = el} 
-              /* eslint-enable */
-              value={typedValue}
-              type="text"
-            />
+            <div className="beater__game-wrapper">
+              <div className="beater__game-current">
+                <h1>{currentWord}</h1>
+              </div>
+              <div className="beater__game-widgets">
+                <div className="beater__game-widgets-wrapper">
+                  <span>Level</span>
+                  <h2>
+                    {level}
+                  </h2>
+                </div>
+                <div className="beater__game-widgets-wrapper">
+                  <span>Time </span>
+                  <h2>
+                    {timer}
+                  </h2>
+                </div>
+                <div className="beater__game-widgets-wrapper">
+                  <span>Score</span>
+                  <h2>
+                    {score}
+                  </h2>
+                </div>
+              </div>
+              <input
+                autoFocus
+                className="beater__game-input"
+                onChange={this.onTypeHandler}
+                /* eslint-disable */
+                ref={el => this.wordTypeInput = el} 
+                /* eslint-enable */
+                placeholder="Start Typing Now!"
+                value={typedValue}
+                type="text"
+              />
+            </div>
           </div>
         )}
 
