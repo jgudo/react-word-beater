@@ -17,3 +17,25 @@
   -moz-text-shadow: 0 0 30px transparentize($color, .5); 
   text-shadow:0 0 30px transparentize($color, .5);
 }
+
+@mixin animation($name, $duration, $count: 1) {
+  -webkit-animation: $name $duration ease $count;
+  -moz-animation: $name $duration ease $count;
+  -o-animation: $name $duration ease $count;
+   animation: $name $duration ease $count;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}

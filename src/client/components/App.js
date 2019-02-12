@@ -114,7 +114,7 @@ export default class App extends Component {
     const greets = [
       'nice!', 'awesome!', 'excellent!', 'fantastic!',
       'incredible!', 'marvelous!', 'wonderful!', 'incredible!',
-      'amazing!', 'impressive!', 'wowowee!'
+      'amazing!', 'impressive!', 'wowowee!', 'perfect!'
     ];
     const random = Math.floor(Math.random() * greets.length);
     this.setState(() => ({ greet: greets[random] }));

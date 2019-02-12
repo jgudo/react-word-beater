@@ -72,7 +72,7 @@
     h2.timeRunningOut {
       color: $red;
       @include textShadow($red);
-      animation: shrinkGrow .5s ease infinite;
+      @include animation(shrinkGrow, .5s, infinite)
     }
 
     span {
@@ -150,12 +150,12 @@
     }
 
     h2.showGreet {
-      animation: greet .5s ease;
+      @include animation(greet, .5s);
     }
   }
 }
 
-@keyframes greet {
+@include keyframes(greet) {
   0% {
     transform: scale(1.5);
     opacity: 0;
@@ -171,7 +171,7 @@
   }
 }
 
-@keyframes shrinkGrow {
+@include keyframes(shrinkGrow) {
   from {
     transform: scale(1.5);
     opacity: 0;
