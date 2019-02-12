@@ -11,7 +11,9 @@ export default class App extends Component {
     timer: 20,
     timerBase: 20,
     plusScore: 10,
-    gameOver: false
+    gameOver: false,
+    correct: false,
+    greet: ''
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -28,8 +30,11 @@ export default class App extends Component {
         currentWord: word(),
         typedValue: '',
         score: prevState.score + plusScore,
-        timer: timerBase
+        timer: timerBase,
+        correct: true
       }));
+
+      this.showGreet();
 
       if (score >= 490) {
         this.setState(() => ({
@@ -94,21 +99,30 @@ export default class App extends Component {
           gameStarted: false, 
           timer: 20,
           typedValue: '',
-          currentWord: undefined
+          currentWord: undefined,
+          greet: '',
+          correct: false
         }));
       }  
     }, 1000);
   }
 
+  showGreet = () => {
+    const greets = [
+      'nice!', 'awesome!', 'excellent!', 'fantastic!',
+      'incredible!', 'marvelous!', 'wonderful!', 'incredible!',
+      'amazing!', 'impressive!', 'wowowee!'
+    ];
+    const random = Math.floor(Math.random() * greets.length);
+    this.setState(() => ({ greet: greets[random] }));
+  };
+
   onKeyUpHandler = (e) => {
     const input = e.target.value;
     const regExp = new RegExp(input, 'g');
 
-    // Reset
     this.visibleCurrentWord.innerHTML = this.state.currentWord;
-    console.dir(this.visibleCurrentWord);
     if (input.trim() !== '') {
-      // Perform matching
       this.visibleCurrentWord.innerHTML = this.state.currentWord.replace(regExp, (match) => {
         return `<span class="matched">${match}</span>`;
       });
@@ -117,7 +131,10 @@ export default class App extends Component {
   
   onTypeHandler = (e) => {
     const input = e.target.value.toLowerCase().trim();
-    this.setState(() => ({ typedValue: input }));
+    this.setState(() => ({ 
+      typedValue: input,
+      correct: this.state.currentWord !== this.state.typedValue && false  
+    }));
   };
 
   render() {
@@ -127,9 +144,11 @@ export default class App extends Component {
       currentWord,
       timer,
       score,
+      correct,
       typedValue,
       level
     } = this.state;
+
     return (
       <div>
         {(!gameStarted && !gameOver) && (
@@ -153,6 +172,15 @@ export default class App extends Component {
         {gameStarted && (
           <div className="beater__game">
             <div className="beater__game-wrapper">
+              <div className="beater__game-greet">
+                {correct && (
+                  <h2 className={correct ? 'showGreet' : null}>
+                    <img src="/images/star.svg" alt=""/>
+                    {this.state.greet}
+                    <img src="/images/star.svg" alt=""/>
+                  </h2>
+                )}
+              </div>
               <div className="beater__game-current">
                 <h1 
                   /* eslint-disable */
@@ -170,8 +198,10 @@ export default class App extends Component {
                   </h2>
                 </div>
                 <div className="beater__game-widgets-wrapper">
-                  <span>Time </span>
-                  <h2>
+                  <span>
+                    Time 
+                  </span>
+                  <h2 className={timer <= 3 ? 'timeRunningOut' : null}>
                     {timer}
                   </h2>
                 </div>
