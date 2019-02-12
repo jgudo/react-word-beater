@@ -12,6 +12,7 @@ export default class App extends Component {
     this.correctWordAudio = new Audio('/audios/correct.mp3');
     this.mainSound = new Audio('./audios/happy.mp3');
     this.mainSound.volume = 0.1;
+    this.mainSound.loop = true;
   }
 
   state = {
@@ -94,6 +95,7 @@ export default class App extends Component {
       }
     }
 
+    // Contro main sound
     if (audioMuted) {
       this.mainSound.pause();
       this.mainSound.currentTime = 0;
@@ -110,10 +112,12 @@ export default class App extends Component {
       score: 0,
       level: 1
     }));
+
+    // Adjust main sound
     this.mainSound.volume = 0.05;
 
+    // Prevent losing focus
     document.addEventListener('click', (e) => {
-      // console.log(e.target);
       e.stopImmediatePropagation();
       if (this.state.gameStarted) this.wordTypeInput.focus();
     });
@@ -136,7 +140,10 @@ export default class App extends Component {
           greet: '',
           correct: false
         }));
+
+        // Control sound
         if (!this.state.audioMuted) this.gameOverAudio.play();
+        this.mainSound.volume = 0.1;
       }  
     }, 1000);
   }
