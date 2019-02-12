@@ -99,6 +99,21 @@ export default class App extends Component {
       }  
     }, 1000);
   }
+
+  onKeyUpHandler = (e) => {
+    const input = e.target.value;
+    const regExp = new RegExp(input, 'g');
+
+    // Reset
+    this.visibleCurrentWord.innerHTML = this.state.currentWord;
+    console.dir(this.visibleCurrentWord);
+    if (input.trim() !== '') {
+      // Perform matching
+      this.visibleCurrentWord.innerHTML = this.state.currentWord.replace(regExp, (match) => {
+        return `<span class="matched">${match}</span>`;
+      });
+    }
+  }
   
   onTypeHandler = (e) => {
     const input = e.target.value.toLowerCase().trim();
@@ -139,7 +154,13 @@ export default class App extends Component {
           <div className="beater__game">
             <div className="beater__game-wrapper">
               <div className="beater__game-current">
-                <h1>{currentWord}</h1>
+                <h1 
+                  /* eslint-disable */
+                  ref={el => this.visibleCurrentWord = el}
+                  /* eslint-enable */
+                >
+                {currentWord}
+                </h1>
               </div>
               <div className="beater__game-widgets">
                 <div className="beater__game-widgets-wrapper">
@@ -169,6 +190,7 @@ export default class App extends Component {
                 ref={el => this.wordTypeInput = el} 
                 /* eslint-enable */
                 placeholder="Start Typing Now!"
+                onKeyUp={this.onKeyUpHandler}
                 value={typedValue}
                 type="text"
               />

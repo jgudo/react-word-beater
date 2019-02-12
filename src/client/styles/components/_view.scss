@@ -13,7 +13,6 @@
   &-title {
     font-size: $font-xxl;
     font-weight: 900;
-    text-transform: uppercase;
     margin-bottom: $m-size;
   }
 
@@ -128,6 +127,9 @@
 
   &-title {
     @extend .beater__main-title;
-    text-transform: lowercase;
   }
+}
+
+.matched {
+  color: $yellow;
 }
