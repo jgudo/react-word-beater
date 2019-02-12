@@ -103,6 +103,13 @@
       @extend .beater__main-title;
       text-transform: lowercase;
       @include textShadow($pink);
+      margin-top: $padding-sm;
+    }
+
+    p {
+      font-size: $s-size;
+      color: rgba(255, 255, 255, .5);
+      letter-spacing: 2px;
     }
 
   }

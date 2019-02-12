@@ -33,6 +33,13 @@ module.exports = (env) => {
         })
       }]
     },
+    resolve: {
+      modules: [
+        path.resolve('./src'),
+        path.resolve('./node_modules')
+      ],
+      extensions: ['*', '.js', '.jsx']
+    },
     plugins: [CSSExtract],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {

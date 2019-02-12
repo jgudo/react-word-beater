@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import word from '../helpers/random-word';
+import MainScreen from './MainScreen';
+import Game from './Game';
+import GameOver from './GameOver';
 
 export default class App extends Component {
   state = {
@@ -141,105 +144,33 @@ export default class App extends Component {
     const { 
       gameStarted,
       gameOver, 
-      currentWord,
-      timer,
       score,
-      correct,
-      typedValue,
       level
     } = this.state;
 
     return (
       <div>
         {(!gameStarted && !gameOver) && (
-          <div className="beater__main">
-            <h1 className="beater__main-title">Word Beater</h1>
-            <p className="beater__main-subtitle">
-              Do you have what is takes to become the fastest and accurate typist?
-            </p>
-            <p className="beater__main-subtitle">
-              Type every single word correctly in a given time limit to become a master of word beater!
-            </p>
-            <button
-              className="beater__main-start-button"
-              onClick={this.initGame}
-            >
-            Start Game
-            </button>
-          </div>
+          <MainScreen initGame={this.initGame} />
         )}
-
         {gameStarted && (
-          <div className="beater__game">
-            <div className="beater__game-wrapper">
-              <div className="beater__game-greet">
-                {correct && (
-                  <h2 className={correct ? 'showGreet' : null}>
-                    <img src="/images/star.svg" alt=""/>
-                    {this.state.greet}
-                    <img src="/images/star.svg" alt=""/>
-                  </h2>
-                )}
-              </div>
-              <div className="beater__game-current">
-                <h1 
-                  /* eslint-disable */
-                  ref={el => this.visibleCurrentWord = el}
-                  /* eslint-enable */
-                >
-                {currentWord}
-                </h1>
-              </div>
-              <div className="beater__game-widgets">
-                <div className="beater__game-widgets-wrapper">
-                  <span>Level</span>
-                  <h2>
-                    {level}
-                  </h2>
-                </div>
-                <div className="beater__game-widgets-wrapper">
-                  <span>
-                    Time 
-                  </span>
-                  <h2 className={timer <= 3 ? 'timeRunningOut' : null}>
-                    {timer}
-                  </h2>
-                </div>
-                <div className="beater__game-widgets-wrapper">
-                  <span>Score</span>
-                  <h2>
-                    {score}
-                  </h2>
-                </div>
-              </div>
-              <input
-                autoFocus
-                className="beater__game-input"
-                onChange={this.onTypeHandler}
-                /* eslint-disable */
-                ref={el => this.wordTypeInput = el} 
-                /* eslint-enable */
-                placeholder="Start Typing Now!"
-                onKeyUp={this.onKeyUpHandler}
-                value={typedValue}
-                type="text"
-              />
-            </div>
-          </div>
+          <Game 
+            /* eslint-disable */
+            wordTypeInput={el => this.wordTypeInput = el}
+            gameData={this.state}
+            visibleCurrentWord={el => this.visibleCurrentWord = el}
+            /* eslint-enable */
+            onTypeHandler={this.onTypeHandler}
+            onKeyUpHandler={this.onKeyUpHandler}  
+          />
         )}
 
         {gameOver && (
-          <div className="beater__gameover">
-            <h1 className="beater__gameover-title">Game Over</h1>
-            <h2>Your Final Score: {score}</h2>
-            <h2>Level Reached: {level}</h2>
-            <button
-              className="beater__main-start-button"
-              onClick={this.initGame}
-            >
-            Try Again
-            </button>
-          </div>
+          <GameOver 
+            score={score}
+            level={level}
+            initGame={this.initGame}
+          />
         )}
       </div>
     );
