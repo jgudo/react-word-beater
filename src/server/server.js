@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -10,7 +9,7 @@ app.use(express.static(publicPath));
 
 app.get('/service-worker.js', (req, res) => {
   res.set({ 'Content-Type': 'application/javascript; charset=utf-8' });
-  res.send(fs.readFileSync('build/service-worker.js'));
+  res.send('/service-worker.js');
 });
 
 console.log(publicPath);

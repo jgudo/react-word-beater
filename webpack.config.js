@@ -53,6 +53,12 @@ module.exports = (env) => {
         filename: 'service-worker.js',
         minify: true,
         navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            urlPattern: '/',
+            handler: 'cacheFirst'
+          }
+        ],
         staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
       }),
       CSSExtract
