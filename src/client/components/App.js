@@ -11,11 +11,14 @@ export default class App extends Component {
   constructor() {
     super();
 
-    this.gameOverAudio = new Audio('/audios/gameover.mp3');
-    this.correctWordAudio = new Audio('/audios/correct.mp3');
-    this.mainSound = new Audio('./audios/happy.mp3');
-    this.mainSound.volume = 0.1;
-    this.mainSound.loop = true;
+    this.sound = {
+      gameover: new Audio('/audios/gameover.mp3'),
+      main: new Audio('./audios/happy.mp3'),
+      correct: new Audio('/audios/correct.mp3')
+    };
+
+    this.sound.main.volume = 0.1;
+    this.sound.main.loop = true;
   }
 
   state = {
@@ -45,7 +48,7 @@ export default class App extends Component {
     }
 
     if (!this.state.audioMuted) {
-      this.mainSound.play();
+      this.sound.main.play();
     }
   }
 
@@ -69,8 +72,8 @@ export default class App extends Component {
       }));
       // play audio
       if (!audioMuted) {
-        this.correctWordAudio.currentTime = 0;
-        this.correctWordAudio.play();
+        this.sound.correct.currentTime = 0;
+        this.sound.correct.play();
       }
       // Show greet
       this.showGreet();
@@ -110,10 +113,10 @@ export default class App extends Component {
 
     // Contro main sound
     if (audioMuted) {
-      this.mainSound.pause();
-      this.mainSound.currentTime = 0;
+      this.sound.main.pause();
+      this.sound.main.currentTime = 0;
     } else {
-      this.mainSound.play();
+      this.sound.main.play();
     }
   }
  
@@ -127,7 +130,7 @@ export default class App extends Component {
     }));
 
     // Adjust main sound
-    this.mainSound.volume = 0.05;
+    this.sound.main.volume = 0.05;
 
     // Prevent losing focus
     document.addEventListener('click', (e) => {
@@ -156,7 +159,7 @@ export default class App extends Component {
 
         // Control sound
         if (!this.state.audioMuted) this.gameOverAudio.play();
-        this.mainSound.volume = 0.1;
+        this.sound.main.volume = 0.1;
       }  
     }, 1000);
   }

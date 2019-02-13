@@ -71,7 +71,7 @@ module.exports = (env) => {
       setup: (app) => {
         app.get('/service-worker.js', (req, res) => {
           res.set({ 'Content-Type': 'application/javascript; charset=utf-8' });
-          res.send(fs.readFileSync('build/service-worker.js'));
+          res.send(fs.readFileSync('./build/service-worker.js'));
         });
       }
     }
