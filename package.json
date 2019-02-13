@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Gudo",
   "license": "MIT",
+  "engines": {
+    "npm": "6.5.0"
+  },
   "scripts": {
     "start": "node src/server/server.js",
     "serve": "live-server public/",
