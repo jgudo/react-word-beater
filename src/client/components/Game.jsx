@@ -5,7 +5,8 @@ const Game = ({
   onTypeHandler,
   onKeyUpHandler,
   wordTypeInput,
-  visibleCurrentWord
+  visibleCurrentWord,
+  plusScoreRef
 }) => {
   const levelColor = {
     1: '#fff',
@@ -14,6 +15,15 @@ const Game = ({
     4: '#F9E606',
     5: '#ED06FB',
     6: '#9B1BEA' 
+  };
+
+  const textShadow = {
+    1: 'rgba(255, 255, 255, .4)',
+    2: 'rgba(72, 140, 161, .4)',
+    3: 'rgba(153, 218, 0, .4)',
+    4: 'rgba(249, 230, 6, .4)',
+    5: 'rgba(237, 6, 251, .4)',
+    6: 'rgba(155, 27, 234, .4)'
   };
 
   return (
@@ -42,7 +52,8 @@ const Game = ({
           <div className="beater__game-widgets-wrapper">
             <span>Level</span>
             <h2 style={{
-              color: levelColor[gameData.level]
+              color: levelColor[gameData.level],
+              textShadow: `0 0 15px ${textShadow[gameData.level]}`
             }}>
               {gameData.level}
             </h2>
@@ -57,9 +68,17 @@ const Game = ({
           </div>
           <div className="beater__game-widgets-wrapper">
             <span>Score</span>
-            <h2>
-              {gameData.score}
-            </h2>
+            <div>
+              <h2>
+                {gameData.score}
+              </h2>
+              <span 
+                className="plus"
+                ref={plusScoreRef}
+              >
+              +{gameData.plusScore}
+              </span>
+            </div>
           </div>
         </div>
         <input

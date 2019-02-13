@@ -37,9 +37,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
+    this.registerSW();
     
     if (loader) {
       setTimeout(() => {
@@ -62,7 +60,8 @@ export default class App extends Component {
       plusScore,
       score,
       timerBase,
-      audioMuted
+      audioMuted,
+      gameStarted
     } = this.state;
 
     if (typedValue === currentWord) {
@@ -103,17 +102,19 @@ export default class App extends Component {
         this.setState(() => ({
           timerBase: 12,
           level: 3, 
-          timer: 12
+          timer: 12,
+          plusScore: 20
         }));
       } else if (score >= 490) {
         this.setState(() => ({
           timerBase: 15,
           level: 2,
-          timer: 15
+          timer: 15,
+          plusScore: 15
         }));
       }    
-    }
-   
+    } 
+  
     // Contro main sound
     if (audioMuted) {
       this.sound.main.pause();
@@ -121,8 +122,26 @@ export default class App extends Component {
     } else {
       this.sound.main.play();
     }
+
+    if (gameStarted) {
+      if (prevState.score < score) {
+        this.plusScoreRef.classList.add('plusPoints');
+      } else {
+        this.plusScoreRef.classList.remove('plusPoints');
+      }
+    }
   }
- 
+  
+  registerSW = () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then((registration) => {
+        console.log('SW registered: ', registration);
+      }).catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+    }
+  };
+
   initGame = () => {
     this.setState(() => ({ 
       gameStarted: true,
@@ -156,6 +175,7 @@ export default class App extends Component {
           timer: 20,
           timerBase: 20,
           typedValue: '',
+          plusScore: 10,
           currentWord: undefined,
           greet: '',
           correct: false
@@ -220,6 +240,7 @@ export default class App extends Component {
             wordTypeInput={el => this.wordTypeInput = el}
             gameData={this.state}
             visibleCurrentWord={el => this.visibleCurrentWord = el}
+            plusScoreRef={el => this.plusScoreRef = el}
             /* eslint-enable */
             onTypeHandler={this.onTypeHandler}
             onKeyUpHandler={this.onKeyUpHandler}  

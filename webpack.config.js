@@ -1,5 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
 const path = require('path');
 
 
@@ -10,7 +10,7 @@ module.exports = (env) => {
   return {
     entry: ['@babel/polyfill', './src/client/index.js'],
     output: {
-      path: path.join(__dirname, 'public/assets'),
+      path: path.join(__dirname, 'public'),
       filename: 'app.bundle.js'
     },
     module: {
@@ -44,7 +44,15 @@ module.exports = (env) => {
     },
     plugins: [
       CSSExtract,
-      new WorkboxPlugin.GenerateSW()
+      new workboxPlugin.GenerateSW({
+        cacheId: 'word-beater',
+        globDirectory: 'public/',
+        swDest: '/sw.js',
+        globIgnores: ['**/service-worker.js'],
+        navigateFallback: '/index.html',
+        clientsClaim: true,
+        skipWaiting: true
+      })
     ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {

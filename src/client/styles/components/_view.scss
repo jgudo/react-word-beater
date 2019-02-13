@@ -71,6 +71,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+
+    & > div {
+      position: relative;
+    }
 
     h2 {
       font-size: $font-md;
@@ -85,6 +90,18 @@
 
     span {
       color: rgba(255, 255, 255, .5);
+    }
+
+    span.plus {
+      color: $yellow;
+      position: absolute;
+      right: -20px;
+      top: 0;
+      opacity: 0;
+    }
+
+    span.plus.plusPoints {
+      @include animation(plusPoints, .7s);
     }
 
   }
@@ -199,6 +216,20 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@include keyframes(plusPoints) {
+  0% {
+    top: 50px;
+    opacity: 0;
+  }
+  50% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
