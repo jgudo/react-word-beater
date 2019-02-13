@@ -18,6 +18,7 @@ export default class App extends Component {
     };
 
     this.sound.main.volume = 0.1;
+    this.sound.main.autoplay = true;
     this.sound.main.loop = true;
   }
 
@@ -45,9 +46,6 @@ export default class App extends Component {
       }, 2500);
       setTimeout(() => {
         loader.outerHTML = '';
-        if (!this.state.audioMuted) {
-          this.sound.main.play();
-        }
       }, 3000);
     }
   }
