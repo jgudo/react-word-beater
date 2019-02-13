@@ -2,7 +2,7 @@
 export default function register () { // Register the service worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      const swUrl = 'service-worker.js';
+      const swUrl = '/service-worker.js';
       navigator.serviceWorker
         .register(swUrl)
         .then(registration => {
