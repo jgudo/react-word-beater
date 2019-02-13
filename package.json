@@ -5,6 +5,7 @@
   "author": "Gudo",
   "license": "MIT",
   "engines": {
+    "node": "10.14.2",
     "npm": "6.5.0"
   },
   "scripts": {
