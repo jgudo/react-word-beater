@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server/server.js",
     "serve": "live-server public/",
-    "build": "webpack -p",
+    "build": "webpack --mode=production",
     "dev-server": "webpack-dev-server --mode development",
     "heroku-postbuild": "npm run build"
   },

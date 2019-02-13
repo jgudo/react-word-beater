@@ -1,7 +1,8 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const path = require('path');
+const fs = require('fs');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 module.exports = (env) => {
   const CSSExtract = new ExtractTextPlugin('app.css');
@@ -43,7 +44,6 @@ module.exports = (env) => {
       extensions: ['*', '.js', '.jsx']
     },
     plugins: [
-      CSSExtract,
       new ManifestPlugin({
         fileName: 'asset-manifest.json'
       }),
@@ -54,13 +54,20 @@ module.exports = (env) => {
         minify: true,
         navigateFallback: '/index.html',
         staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
-      })
+      }),
+      CSSExtract
     ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       publicPath: '/assets/',
-      historyApiFallback: true
+      historyApiFallback: true,
+      setup: (app) => {
+        app.get('/service-worker.js', (req, res) => {
+          res.set({ 'Content-Type': 'application/javascript; charset=utf-8' });
+          res.send(fs.readFileSync('build/service-worker.js'));
+        });
+      }
     }
   };
 };
