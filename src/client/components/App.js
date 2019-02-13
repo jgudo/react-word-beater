@@ -33,11 +33,14 @@ export default class App extends Component {
     gameOver: false,
     correct: false,
     audioMuted: false,
-    greet: '',
-    logs: []
+    greet: ''
   };
 
   componentDidMount() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+    
     if (loader) {
       setTimeout(() => {
         loader.classList.add('available');
@@ -110,7 +113,7 @@ export default class App extends Component {
         }));
       }
     }
-
+   
     // Contro main sound
     if (audioMuted) {
       this.sound.main.pause();
