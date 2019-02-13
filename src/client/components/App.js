@@ -80,24 +80,12 @@ export default class App extends Component {
       }
       // Show greet
       this.showGreet();
-
-      if (score >= 490) {
+    
+      if (score >= 4490) {
         this.setState(() => ({
-          timerBase: 15,
-          level: 2,
-          timer: 15
-        }));
-      } else if (score >= 1490) {
-        this.setState(() => ({
-          timerBase: 12,
-          level: 3, 
-          timer: 12
-        }));
-      } else if (score >= 2490) {
-        this.setState(() => ({
-          timerBase: 9,
-          level: 4, 
-          timer: 9
+          timerBase: 3,
+          level: 6, 
+          timer: 3
         }));
       } else if (score >= 3990) {
         this.setState(() => ({
@@ -105,13 +93,25 @@ export default class App extends Component {
           level: 5, 
           timer: 6
         }));
-      } else if (score >= 4490) {
+      } else if (score >= 2490) {
         this.setState(() => ({
-          timerBase: 3,
-          level: 6, 
-          timer: 3
+          timerBase: 9,
+          level: 4, 
+          timer: 9
         }));
-      }
+      } else if (score >= 1490) {
+        this.setState(() => ({
+          timerBase: 12,
+          level: 3, 
+          timer: 12
+        }));
+      } else if (score >= 490) {
+        this.setState(() => ({
+          timerBase: 15,
+          level: 2,
+          timer: 15
+        }));
+      }    
     }
    
     // Contro main sound
@@ -154,6 +154,7 @@ export default class App extends Component {
           gameOver: true,
           gameStarted: false, 
           timer: 20,
+          timerBase: 20,
           typedValue: '',
           currentWord: undefined,
           greet: '',
@@ -161,7 +162,7 @@ export default class App extends Component {
         }));
 
         // Control sound
-        if (!this.state.audioMuted) this.gameOverAudio.play();
+        if (!this.state.audioMuted) this.sound.gameover.play();
         this.sound.main.volume = 0.1;
       }  
     }, 1000);
