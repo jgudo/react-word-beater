@@ -45,11 +45,10 @@ export default class App extends Component {
       }, 2500);
       setTimeout(() => {
         loader.outerHTML = '';
+        if (!this.state.audioMuted) {
+          this.sound.main.play();
+        }
       }, 3000);
-    }
-
-    if (!this.state.audioMuted) {
-      this.sound.main.play();
     }
   }
 
