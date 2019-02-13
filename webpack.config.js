@@ -47,7 +47,7 @@ module.exports = (env) => {
       new workboxPlugin.GenerateSW({
         cacheId: 'word-beater',
         globDirectory: 'public/',
-        swDest: '/sw.js',
+        swDest: 'sw.js',
         globIgnores: ['**/service-worker.js'],
         navigateFallback: '/index.html',
         clientsClaim: true,
