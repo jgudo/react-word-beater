@@ -7,7 +7,9 @@ const Game = ({
   wordTypeInput,
   visibleCurrentWord
 }) => (
-  <div className="beater__game">
+  <div 
+    className={gameData.gameStarted ? 'beater__game fadeIn' : 'beater__game'}
+  >
     <div className="beater__game-wrapper">
       <div className="beater__game-greet">
         {gameData.correct && (

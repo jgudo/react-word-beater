@@ -3,6 +3,9 @@ import word from '../helpers/random-word';
 import MainScreen from './MainScreen';
 import Game from './Game';
 import GameOver from './GameOver';
+import Music from './Music';
+
+const loader = document.getElementById('loader');
 
 export default class App extends Component {
   constructor() {
@@ -30,7 +33,17 @@ export default class App extends Component {
     greet: ''
   };
 
-  componentWillMount() {
+  componentDidMount() {
+    if (loader) {
+      // fade out
+      setTimeout(() => {
+        loader.classList.add('available');
+      }, 2500);
+      setTimeout(() => {
+        loader.outerHTML = '';
+      }, 3000);
+    }
+
     if (!this.state.audioMuted) {
       this.mainSound.play();
     }
@@ -186,8 +199,6 @@ export default class App extends Component {
     const { 
       gameStarted,
       gameOver, 
-      score,
-      level,
       audioMuted
     } = this.state;
 
@@ -210,30 +221,15 @@ export default class App extends Component {
 
         {gameOver && (
           <GameOver 
-            score={score}
-            level={level}
+            gameData={this.state}
             initGame={this.initGame}
           />
         )}
-
-        <div className="beater__audio-control">
-          <span>MUSIC</span>
-          <div 
-            className="beater__audio-control-wrapper"
-            onClick={this.audioHandler}
-            style={{
-              background: audioMuted ? 'rgba(255, 255, 255, .2)' : 'rgba(153,218,0, .2)'
-            }}
-          >
-            <div 
-              className="beater__audio-control-toggle"
-              style={{
-                transform: audioMuted ? 'translateX(0)' : 'translateX(100%)',
-                background: audioMuted ? '#cacaca' : '#99da00'
-              }}
-            ></div>
-          </div>
-        </div>
+        <Music 
+          audioMuted={audioMuted}
+          audioHandler={this.audioHandler}
+        />
+        
       </div>
     );
   }

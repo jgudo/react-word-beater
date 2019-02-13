@@ -4,6 +4,7 @@ import 'normalize.css/normalize.css';
 import './styles/style.scss';
 import WebFont from 'webfontloader';
 import App from './components/App';
+import registerServiceWorker from './registerServiceWorker';
 
 WebFont.load({
   google: {
@@ -11,4 +12,5 @@ WebFont.load({
   }
 });
 
+registerServiceWorker();
 ReactDOM.render(<App />, document.getElementById('app'));

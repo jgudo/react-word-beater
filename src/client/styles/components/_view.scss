@@ -133,11 +133,15 @@
     &:focus {
       outline: none;
     }
+
+    &::placeholder {
+      opacity: .2;
+    }
   }
 
   &-greet {
     position: fixed;
-    top: 0;
+    top: $l-size;
     margin: auto;
 
     h2 {
@@ -156,9 +160,17 @@
     }
 
     h2.showGreet {
-      @include animation(greet, .5s);
+      @include animation(greet, .7s);
     }
   }
+}
+
+.beater__game.fadeIn {
+  @include animation(fadein, .5s);
+}
+
+.beater__gameover.fadeIn {
+  @include animation(fadein, .5s);
 }
 
 @include keyframes(greet) {
@@ -205,13 +217,14 @@
 
 .beater__audio-control {
   position: absolute;
-  bottom: $padding-md;
+  top: $padding-md;
   left: $padding-md;
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 10;
 
   span {
     font-size: 8px;
@@ -239,6 +252,14 @@
     position: absolute;
     transition: all .3s ease;
   }
+}
+
+.copyright {
+  font-size: 10px;
+  margin-top: $padding-xl;
+  opacity: .4;
+
+  a { color: lighten($pink, 20%); }
 }
 
 .matched {

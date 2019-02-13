@@ -15,6 +15,13 @@ const MainScreen = props => (
     >
     Start Game
     </button>
+
+    <div className="copyright">
+      <span>Music used in this game is not mine, downloaded from 
+        &nbsp; <a href="zedge.net" target="_blank">Zedge</a> &nbsp;
+        and &nbsp;<a href="https://www.youtube.com/watch?v=OrPEoqp4sjg" target="_blank">Alumo Music on Youtube</a>
+      </span>
+    </div>
   </div>
 );
 
