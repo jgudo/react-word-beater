@@ -6,6 +6,7 @@
 
 .beater__main {
   width:70%;
+  max-width: 120rem;
   height: 100%;
   margin: auto;
   position: relative;
@@ -48,6 +49,7 @@
 
   &-wrapper {
     width: 70%;
+    max-width: 120rem;
     height: 100%;
     margin: auto;
     display: flex;

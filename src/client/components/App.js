@@ -30,12 +30,12 @@ export default class App extends Component {
     gameOver: false,
     correct: false,
     audioMuted: false,
-    greet: ''
+    greet: '',
+    logs: []
   };
 
   componentDidMount() {
     if (loader) {
-      // fade out
       setTimeout(() => {
         loader.classList.add('available');
       }, 2500);
