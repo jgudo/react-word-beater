@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameOver = ({ gameData, initGame }) => (
+const GameOver = ({ gameData, initGame, quitGame }) => (
   <div 
     className={gameData.gameOver ? 'beater__gameover fadeIn' : 'beater__gameover'}
   >
@@ -12,6 +12,12 @@ const GameOver = ({ gameData, initGame }) => (
       onClick={initGame}
     >
     Try Again
+    </button>
+    <button
+      className="beater__main-quit-button"
+      onClick={quitGame}
+    >
+    Quit
     </button>
   </div>
 );

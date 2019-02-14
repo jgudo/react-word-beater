@@ -46,9 +46,7 @@ module.exports = (env) => {
       CSSExtract,
       new workboxPlugin.GenerateSW({
         cacheId: 'word-beater',
-        globDirectory: 'public/',
         swDest: 'sw.js',
-        globIgnores: ['**/service-worker.js'],
         navigateFallback: '/index.html',
         clientsClaim: true,
         skipWaiting: true

@@ -161,6 +161,13 @@ export default class App extends Component {
     this.initTimer();
   };
 
+  quitGame = () => {
+    this.setState(() => ({
+      gameStarted: false,
+      gameOver: false
+    }));
+  };
+
   initTimer = () => {
     const gameTimer = setInterval(() => {
       this.setState(() => ({ timer: this.state.timer - 1 }));
@@ -208,6 +215,7 @@ export default class App extends Component {
   }
   
   onTypeHandler = (e) => {
+    this.wordTypeInput.setAttribute('maxlength', this.state.currentWord.length);
     const input = e.target.value.toLowerCase().trim();
     this.setState(() => ({ 
       typedValue: input,
@@ -234,10 +242,10 @@ export default class App extends Component {
         {gameStarted && (
           <Game 
             /* eslint-disable */
-            wordTypeInput={el => this.wordTypeInput = el}
             gameData={this.state}
-            visibleCurrentWord={el => this.visibleCurrentWord = el}
             plusScoreRef={el => this.plusScoreRef = el}
+            wordTypeInput={el => this.wordTypeInput = el}
+            visibleCurrentWord={el => this.visibleCurrentWord = el}
             /* eslint-enable */
             onTypeHandler={this.onTypeHandler}
             onKeyUpHandler={this.onKeyUpHandler}  
@@ -246,8 +254,9 @@ export default class App extends Component {
 
         {gameOver && (
           <GameOver 
-            gameData={this.state}
             initGame={this.initGame}
+            gameData={this.state}
+            quitGame={this.quitGame}
           />
         )}
         <Music 

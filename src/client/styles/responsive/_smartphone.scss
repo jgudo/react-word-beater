@@ -4,7 +4,7 @@
     width: 90%;
 
     &-title {
-      font-size: $font-l;
+      font-size: 10vw;
     }
   }
 
@@ -19,8 +19,19 @@
       padding: $padding-sm 0;
     }
 
+    
+    &-widgets-wrapper {
+      h2 {
+        font-size: 7vw;
+      }
+    }
+
     &-current {
       padding: $padding-xs 0;
+
+      h1 {
+        font-size: 10vw;
+      }
     }
 
     &-input {

@@ -39,6 +39,13 @@
     @include linearGradient(180deg, $pink, $purple);
     @include boxShadow($pink);
   }
+
+  &-quit-button {
+    background: none;
+    color: #fff;
+    margin-top: $padding-md;
+    border: none;
+  }
 }
 
 .beater__game {
@@ -61,7 +68,7 @@
   &-widgets {
     width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: $padding-sm $padding-xl;
   }
@@ -130,6 +137,7 @@
       text-transform: lowercase;
       @include textShadow($pink);
       margin-top: $padding-sm;
+      word-break: break-all;
     }
 
     p {
@@ -222,7 +230,7 @@
 
 @include keyframes(plusPoints) {
   0% {
-    top: 50px;
+    top: 30px;
     opacity: 0;
   }
   50% {
@@ -247,11 +255,15 @@
   &-title {
     @extend .beater__main-title;
   }
+
+  h2 {
+    margin-bottom: 0;
+  }
 }
 
 .beater__audio-control {
   position: absolute;
-  top: $padding-md;
+  bottom: $padding-md;
   left: $padding-md;
   color: #fff;
   display: flex;
