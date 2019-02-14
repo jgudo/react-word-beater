@@ -25,6 +25,10 @@
 
   &-subtitle {
     margin-bottom: 0;
+    line-height: $l-size;
+    @media (min-width: 1024px) {
+      width: 80%;
+    }
   }
 
   &-start-button {
