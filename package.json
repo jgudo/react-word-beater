@@ -12,7 +12,7 @@
     "start": "node src/server/server.js",
     "serve": "live-server public/",
     "build:dev": "webpack && live-server public/",
-    "build": "webpack --env production --mode=production",
+    "build": "webpack --env production --mode production",
     "dev-server": "webpack-dev-server --mode development",
     "heroku-postbuild": "npm run build"
   },
