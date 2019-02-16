@@ -4,14 +4,14 @@ const path = require('path');
 
 
 module.exports = (env) => {
-  const CSSExtract = new ExtractTextPlugin('app.css');
+  const CSSExtract = new ExtractTextPlugin('css/app.css');
   const isProduction = env === 'production';
   
   return {
     entry: ['@babel/polyfill', './src/client/index.js'],
     output: {
       path: path.join(__dirname, 'public'),
-      filename: 'app.bundle.js'
+      filename: 'js/app.bundle.js'
     },
     module: {
       rules: [{

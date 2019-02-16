@@ -78,37 +78,15 @@ export default class App extends Component {
       this.showGreet();
     
       if (score >= 4490) {
-        this.setState(() => ({
-          timerBase: 3,
-          level: 6, 
-          timer: 3
-        }));
+        this.setGameStateOnComplete(3, 6, 3, 25);
       } else if (score >= 3990) {
-        this.setState(() => ({
-          timerBase: 6,
-          level: 5, 
-          timer: 6
-        }));
+        this.setGameStateOnComplete(6, 5, 6, 20);
       } else if (score >= 2490) {
-        this.setState(() => ({
-          timerBase: 9,
-          level: 4, 
-          timer: 9
-        }));
+        this.setGameStateOnComplete(9, 4, 9, 20);
       } else if (score >= 1490) {
-        this.setState(() => ({
-          timerBase: 12,
-          level: 3, 
-          timer: 12,
-          plusScore: 20
-        }));
+        this.setGameStateOnComplete(12, 3, 12, 20);
       } else if (score >= 490) {
-        this.setState(() => ({
-          timerBase: 15,
-          level: 2,
-          timer: 15,
-          plusScore: 15
-        }));
+        this.setGameStateOnComplete(15, 2, 15, 15);
       }    
     } 
   
@@ -139,6 +117,15 @@ export default class App extends Component {
     }
   };
 
+  setGameStateOnComplete = (timerBase, level, timer, plusScore = 10) => {
+    this.setState(() => ({
+      timerBase,
+      level,
+      timer,
+      plusScore
+    }));
+  };
+ 
   initGame = () => {
     this.setState(() => ({ 
       gameStarted: true,
@@ -217,7 +204,7 @@ export default class App extends Component {
   onTypeHandler = (e) => {
     this.wordTypeInput.setAttribute('maxlength', this.state.currentWord.length);
     const input = e.target.value.toLowerCase().trim();
-    this.setState(() => ({ 
+    this.setState(() => ({  
       typedValue: input,
       correct: this.state.currentWord !== this.state.typedValue && false  
     }));
