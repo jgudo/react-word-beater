@@ -1,3 +1,3 @@
 # Live Demo 
 
- <https://word-beater.herokuapp.com>
+ <https://beattheword.netlify.com>
