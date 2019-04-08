@@ -8,6 +8,9 @@
   height: 100%;
   position: fixed;
   opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
   -webkit-transition: opacity cubic-bezier(.4, 0, .2, 1) 436ms;
   -moz-transition: opacity cubic-bezier(.4, 0, .2, 1) 436ms;
@@ -17,9 +20,11 @@
   
 .loader__head {
   background: rgba(255, 255, 255, .2);
+  width: 100%;
   height: 4px;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
 }
 
 .loader .first-indicator, .loader .second-indicator {
@@ -57,12 +62,37 @@
   align-self: center;
 }
 
+.loader h4 {
+  text-align: center;
+  color: #fff; 
+  @include animation(pulse, 1s, infinite);
+}
+
 @include keyframes(fadein) {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@include keyframes(pulse) {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  30% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

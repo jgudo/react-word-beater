@@ -273,11 +273,17 @@ function words(options) {
     return generateRandomWord();
   }
 
+  /* eslint-disable no-param-reassign */
+  /* eslint-disable no-plusplus */
+  /* eslint-disable arrow-parens */
+  /* eslint-disable space-unary-ops */
+  /* eslint-disable no-shadow */
+
   // No arguments = generate one word
   if (typeof (options) === 'undefined') {
     return word();
   }
-  /* eslint-disable  */
+
   // Just a number = return that many words
   if (typeof (options) === 'number') {
     options = { exactly: options };
@@ -294,12 +300,12 @@ function words(options) {
     options.wordsPerString = 1;
   }
 
-  //not a function = returns the raw word
+  // not a function = returns the raw word
   if (typeof (options.formatter) !== 'function') {
     options.formatter = (word) => word;
   }
   
-  //not a string = separator is a space
+  // not a string = separator is a space
   if (typeof(options.separator) !== 'string') {
     options.separator = ' ';
   }
@@ -332,5 +338,3 @@ function words(options) {
 }
 
 export default words;
-// Export the word list as it is often useful
-// words.wordList = wordList;

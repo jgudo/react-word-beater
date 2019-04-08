@@ -16,40 +16,48 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
 
-  &-title {
-    font-size: $font-xxl;
-    font-weight: 900;
-    margin-bottom: $m-size;
-  }
+.beater__main-title {
+  font-size: $font-xxl;
+  font-weight: 900;
+  margin-bottom: $m-size;
+}
 
-  &-subtitle {
-    margin-bottom: 0;
-    line-height: $l-size;
-    @media (min-width: 1024px) {
-      width: 80%;
-    }
+.beater__main-subtitle {
+  margin-bottom: 0;
+  line-height: $l-size;
+  @media (min-width: 1024px) {
+    width: 80%;
   }
+}
 
-  &-start-button {
-    text-transform: uppercase;
-    color: #fff;
-    border: none;
-    font-weight: 700;
-    border-radius: 20px;
-    margin-top: $padding-xl;
-    padding: $padding-sm $padding-xl;
-    font-size: $font-xs;
-    @include linearGradient(180deg, $pink, $purple);
-    @include boxShadow($pink);
-  }
+.beater__main-actions {
+  display: flex;
 
-  &-quit-button {
-    background: none;
-    color: #fff;
-    margin-top: $padding-md;
-    border: none;
+  button {
+    margin-left: 10px;
+    margin-right: 10px;
   }
+}
+
+.beater__main-start-button {
+  text-transform: uppercase;
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  border-radius: 20px;
+  margin-top: $padding-xl;
+  padding: $padding-sm $padding-xl;
+  font-size: $font-xs;
+  @include linearGradient(180deg, $pink, $purple);
+  @include boxShadow($pink);
+}
+
+.beater__main-quit-button {
+  @extend .beater__main-start-button;
+  @include linearGradient(180deg, $orange, $red);
+  @include boxShadow($red);
 }
 
 .beater__game {
@@ -58,191 +66,144 @@
   height: 100vh;
   position: relative;
 
-  &-wrapper {
-    width: 70%;
-    max-width: 120rem;
-    height: 100%;
+}
+
+.beater__game-greet {
+  width: 100%;
+  position: fixed;
+  top: $l-size;
+  margin: auto;
+
+  h2 {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
     margin: auto;
+    color: $yellow;
+    @include textShadow($yellow);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    
+    img {
+      width: 20px;
+      height: 20px;
+      margin: 0 $m-size;
+    }
   }
 
-  &-widgets {
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: $padding-sm $padding-xl;
+  h2.showGreet {
+    @include animation(greet, 1s);
   }
+}
 
-  &-widgets-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.beater__game-wrapper {
+  width: 70%;
+  max-width: 120rem;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.beater__game-widgets {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: $padding-sm $padding-xl;
+}
+
+.beater__game-widgets-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+
+  & > div {
     position: relative;
-
-    & > div {
-      position: relative;
-    }
-
-    h2 {
-      font-size: $font-md;
-      margin-top: $s-size;
-    }
-
-    h2.timeRunningOut {
-      color: $red;
-      @include textShadow($red);
-      @include animation(shrinkGrow, .5s, infinite)
-    }
-
-    span {
-      color: rgba(255, 255, 255, .5);
-    }
-
-    span.plus {
-      color: $yellow;
-      position: absolute;
-      right: -20px;
-      top: 0;
-      z-index: 1;
-      opacity: 0;
-    }
-
-    span.plus.plusPoints {
-      @include animation(plusPoints, .7s);
-    }
-
   }
 
-  &-current {
-    padding: $padding-xs $padding-l;
-    width: 100%;
-    text-align: center;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 70%;
-      height: 1px;
-      background:rgba(255, 255, 255, .1);
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
-
-    h1 {
-      @extend .beater__main-title;
-      text-transform: lowercase;
-      @include textShadow($pink);
-      margin-top: $padding-sm;
-      word-break: break-all;
-    }
-
-    p {
-      font-size: $s-size;
-      color: rgba(255, 255, 255, .5);
-      letter-spacing: 2px;
-    }
-
-  }
-
-  &-input {
-    background: transparent;
-    padding: $padding-md;
-    padding-bottom: $padding-xs;
+  h2 {
     font-size: $font-md;
-    color: #fff;
-    border: none;
-    border-bottom: 1px solid #fff;
-    text-align: center;
-
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      opacity: .2;
-    }
+    margin-top: $s-size;
   }
 
-  &-greet {
-    position: fixed;
-    top: $l-size;
-    margin: auto;
-
-    h2 {
-      opacity: 0;
-      color: $yellow;
-      @include textShadow($yellow);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      
-      img {
-        width: 20px;
-        height: 20px;
-        margin: 0 $m-size;
-      }
-    }
-
-    h2.showGreet {
-      @include animation(greet, .7s);
-    }
-  }
-}
-
-.beater__game.fadeIn {
-  @include animation(fadein, .5s);
-}
-
-.beater__gameover.fadeIn {
-  @include animation(fadein, .5s);
-}
-
-@include keyframes(greet) {
-  0% {
-    transform: scale(1.5);
-    opacity: 0;
+  h2.timeRunningOut {
+    color: $red;
+    @include textShadow($red);
+    @include animation(shrinkGrow, .5s, infinite)
   }
 
-  50% {
-    transform: scale(1);
-    opacity: 1;
+  span {
+    color: rgba(255, 255, 255, .5);
   }
 
-  100% {
-    opacity: 0;
-  }
-}
-
-@include keyframes(shrinkGrow) {
-  from {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@include keyframes(plusPoints) {
-  0% {
-    top: 30px;
-    opacity: 0;
-  }
-  50% {
+  span.plus {
+    color: $yellow;
+    position: absolute;
+    right: -20px;
     top: 0;
-    opacity: 1;
-  }
-  100% {
+    z-index: 1;
     opacity: 0;
+    @include animation(plusPoints, 1s);
+  }
+}
+
+.beater__game-current {
+  padding: $padding-xs $padding-l;
+  width: 100%;
+  text-align: center;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 1px;
+    background:rgba(255, 255, 255, .1);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  h1 {
+    @extend .beater__main-title;
+    text-transform: lowercase;
+    @include textShadow($blue);
+    margin-top: $padding-sm;
+    word-break: break-all;
+  }
+
+  p {
+    font-size: $s-size;
+    color: rgba(255, 255, 255, .5);
+    letter-spacing: 2px;
+  }
+
+}
+
+.beater__game-input {
+  background: transparent;
+  padding: $padding-md;
+  padding-bottom: $padding-xs;
+  font-size: $font-md;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid transparentize(#fff, .5);
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    opacity: .2;
   }
 }
 
@@ -256,13 +217,20 @@
   align-items: center;
   flex-direction: column;
 
-  &-title {
-    @extend .beater__main-title;
-  }
-
   h2 {
     margin-bottom: 0;
   }
+}
+
+.beater__gameover-title {
+  text-align: center;
+  @extend .beater__main-title;
+}
+
+.beater__gameover-summary {
+  width: 35rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .beater__audio-control {
@@ -304,6 +272,27 @@
   }
 }
 
+.beater__countdown {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.beater__countdown-count {
+  font-size: $font-xxl;
+  @include animation(pulse, 1s, infinite);
+}
+
+.fadeIn {
+  @include animation(fadein, .5s);
+}
+
 .copyright {
   font-size: 10px;
   margin-top: $padding-xl;
@@ -314,4 +303,49 @@
 
 .matched {
   color: $yellow;
+}
+
+.not-matched {
+  color: $red;
+}
+
+@include keyframes(greet) {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@include keyframes(shrinkGrow) {
+  from {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@include keyframes(plusPoints) {
+  0% {
+    top: 30px;
+    opacity: 0;
+  }
+  50% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
