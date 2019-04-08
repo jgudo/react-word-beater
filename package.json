@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node src/server/server.js",
-    "serve": "live-server public/",
+    "serve": "live-server dist/",
     "build:dev": "webpack && live-server public/",
     "build": "cross-env NODE_ENV=production webpack --config webpack/prod.config.js",
     "dev-server": "webpack-dev-server --open --config webpack/dev.config.js",
