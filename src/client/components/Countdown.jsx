@@ -19,7 +19,6 @@ class Countdown extends Component {
   }, 1000);
 
   render() {
-    console.log(this.state.count);
     return (
       <div className="beater__countdown">
         <h1>Game will start in </h1>

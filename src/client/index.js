@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'normalize.css/normalize.css';
-import './styles/style.scss';
 import WebFont from 'webfontloader';
 import App from './App';
+import 'normalize.css/normalize.css';
+import './styles/style.scss';
 
 WebFont.load({
   google: {
@@ -17,6 +17,19 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   }).catch((registrationError) => {
     console.log('SW registration failed: ', registrationError);
   });
+
+  /* eslint-disable no-restricted-syntax */
+  if (
+    !window.__ALLOW_REACT_DEVTOOLS__ &&
+    window.__REACT_DEVTOOLS_GLOBAL_HOOK__ &&
+    typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object'
+  ) {
+    for (let [key, value] of Object.entries(window.__REACT_DEVTOOLS_GLOBAL_HOOK__)) {
+      window.__REACT_DEVTOOLS_GLOBAL_HOOK__[key] = typeof value === 'function' ? () => {} : null;
+    }
+  }
+
+  delete window.__ALLOW_REACT_DEVTOOLS__;
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

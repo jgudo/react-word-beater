@@ -14,40 +14,38 @@ const GameOver = (props) => {
   } = props;
 
   return (
-    <div 
-        className="beater__gameover fadeIn"
-    >
+    <div className="beater__gameover fadeIn">
       <h1 className="beater__gameover-title">Game Over</h1>
       <div className="beater__gameover-summary">
-        <h2>Your Final Score:</h2>
+        <h2>Final Score:</h2>
         <h2>{score}</h2>
       </div>
       <div className="beater__gameover-summary">
         <h2>Level Reached:</h2>
         <h2>{level}</h2>
       </div>
-      {highScore && (
+      {!!highScore && (
         <div className="beater__gameover-summary">
-          <h2>Your High Score:</h2>
+          <h2>High Score:</h2>
           <h2>{highScore}</h2>
         </div>
       )}
-      {lastScore && (
+      {!!lastScore && (
         <div className="beater__gameover-summary">
-          <h2>Your Last Score:</h2>
+          <h2>Previous Score:</h2>
           <h2>{lastScore}</h2>
         </div>
       )}
       
       <div className="beater__main-actions">
         <button
-            className="beater__main-start-button"
+            className="button--primary button--big"
             onClick={initGame}
         >
         Try Again
         </button>
         <button
-            className="beater__main-quit-button"
+            className="button--secondary button--big"
             onClick={quitGame}
         >
         Quit

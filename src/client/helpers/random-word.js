@@ -246,15 +246,22 @@ const wordList = [
   'your', 'yourself', 'youth', 'zero', 'zebra', 'zipper', 'zoo', 'zulu'
 ];
 
-function words(options) {
-  function randInt(lessThan) {
-    return Math.floor(Math.random() * lessThan);
-  }
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
+/* eslint-disable arrow-parens */
+/* eslint-disable space-unary-ops */
+/* eslint-disable no-shadow */
 
-  function generateRandomWord() {
+export const generateWord = (options) => {
+  const randInt = (lessThan) => {
+    return Math.floor(Math.random() * lessThan);
+  };
+
+  const generateRandomWord = () => {
     return wordList[randInt(wordList.length)];
-  }
-  function generateWordWithMaxLength() {
+  };
+
+  const generateWordWithMaxLength = () => {
     let rightSize = false;
     let wordUsed;
     while (!rightSize) {  
@@ -264,20 +271,14 @@ function words(options) {
       }
     }
     return wordUsed;
-  }
+  };
   
-  function word() {
+  const word = () => {
     if (options && options.maxLength > 1) {
       return generateWordWithMaxLength();
     } 
     return generateRandomWord();
-  }
-
-  /* eslint-disable no-param-reassign */
-  /* eslint-disable no-plusplus */
-  /* eslint-disable arrow-parens */
-  /* eslint-disable space-unary-ops */
-  /* eslint-disable no-shadow */
+  };
 
   // No arguments = generate one word
   if (typeof (options) === 'undefined') {
@@ -322,7 +323,6 @@ function words(options) {
       token += options.formatter(word(), relativeIndex) + options.separator;
     }
     relativeIndex++;
-    /* eslint-enable  */
     if ((i + 1) % options.wordsPerString === 0) {
       results.push(token);
       token = ''; 
@@ -335,6 +335,15 @@ function words(options) {
   }
 
   return results;
-}
+};
 
-export default words;
+export const generateGreet = () => {
+  const greets = [
+    'nice!', 'awesome!', 'excellent!', 'fantastic!',
+    'incredible!', 'marvelous!', 'wonderful!', 'incredible!',
+    'amazing!', 'impressive!', 'wowowee!', 'perfect!'
+  ];
+  const random = Math.floor(Math.random() * greets.length);
+  
+  return greets[random];
+};

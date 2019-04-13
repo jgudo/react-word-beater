@@ -25,6 +25,13 @@
    animation: $name $duration ease $count;
 }
 
+@mixin transition($prop: all, $speed: .3s, $func: ease) {
+  -webkit-transition: $prop $speed $func;
+  -moz-transition: $prop $speed $func;
+  -ms-transition: $prop $speed $func;
+  transition: $prop $speed $func;
+}
+
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
     @content; 

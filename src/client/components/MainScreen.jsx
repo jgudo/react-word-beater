@@ -10,7 +10,7 @@ const MainScreen = ({ initGame }) => (
       word beater master!
     </p>
     <button
-        className="beater__main-start-button"
+        className="button--primary button--big"
         onClick={initGame}
     >
     Start Game

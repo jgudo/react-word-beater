@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import word from './helpers/random-word';
+
 import MainScreen from './components/MainScreen';
 import Game from './components/Game';
 import GameOver from './components/GameOver';
 import Music from './components/Music';
 import Countdowm from './components/Countdown';
 import Loader from './components/Loader';
+import { generateWord, generateGreet } from './helpers/random-word';
 
 import correctBgm from './audios/correct.mp3';
 import gameoverBgm from './audios/gameover.mp3';
@@ -69,18 +70,17 @@ class App extends Component {
 
     if (typedValue === currentWord) {
       this.setState({
-        currentWord: word(),
+        currentWord: generateWord(),
         typedValue: '',
         score: prevState.score + plusScore,
-        timer: timerBase
-      });
+        timer: timerBase,
+        greet: generateGreet()
+      }, this.setInputMaxLength);
       // play correctBgm 
       if (!audioMuted) {
         this.sound.correct.currentTime = 0;
         this.sound.correct.play();
       }
-      // Show greet
-      this.showGreet();
     
       if (score >= 4490) {
         this.setGameStateOnComplete(3, 6, 3, 25); // lvl 6: 3s
@@ -92,7 +92,7 @@ class App extends Component {
         this.setGameStateOnComplete(12, 3, 12, 20); // lvl 3: 12s
       } else if (score >= 490) {
         this.setGameStateOnComplete(15, 2, 15, 15); // lvl 2: 15s
-      }    
+      }
     } 
   
     // Contro main sound
@@ -104,17 +104,12 @@ class App extends Component {
     }
   }
 
-  setGameStateOnComplete = (
-    timerBase, 
-    level, 
-    timer, 
-    plusScore = 10
-  ) => {
+  setGameStateOnComplete = (tb, lvl, t, ps = 10) => {
     this.setState({
-      timerBase,
-      level,
-      timer,
-      plusScore
+      timerBase: tb,
+      level: lvl,
+      timer: t,
+      plusScore: ps
     });
   };
  
@@ -122,7 +117,7 @@ class App extends Component {
     this.setState({ 
       gameStarted: true,
       gameOver: false,
-      currentWord: word(),
+      currentWord: generateWord(),
       score: 0,
       level: 1
     });
@@ -135,9 +130,6 @@ class App extends Component {
       e.stopImmediatePropagation();
       if (this.state.gameStarted && this.state.countdownFinished) this.wordTypeInput.focus();
     });
-
-    // Init time
-    // this.initTimer();
   };
 
   quitGame = () => {
@@ -147,36 +139,39 @@ class App extends Component {
     });
   };
 
+  updateHighScore = () => {
+    if (localStorage.wordBeaterStats) {
+      const stats = JSON.parse(localStorage.getItem('wordBeaterStats'));
+      const highScore = stats.highScore || 0;
+      const newHighScore = this.state.score > highScore ? this.state.score : highScore;
+
+      this.setState({
+        highScore: newHighScore,
+        lastScore: stats.lastScore
+      });
+
+      localStorage.setItem('wordBeaterStats', JSON.stringify({
+        highScore: newHighScore,
+        lastScore: this.state.score
+      }));
+    } else {
+      localStorage.setItem('wordBeaterStats', JSON.stringify({
+        highScore: this.state.score,
+        lastScore: this.state.score
+      }));
+    }
+  };
+
   initTimer = () => {
     this.setState({ countdownFinished: true });
+    this.setInputMaxLength();
+
     const gameTimer = setInterval(() => {
       this.setState({ timer: this.state.timer - 1 });
 
       if (this.state.timer <= 0 || this.state.gameOver) {
         clearInterval(gameTimer);
-
-        if (localStorage.wordBeaterStats) {
-          const stats = JSON.parse(localStorage.getItem('wordBeaterStats'));
-          const highScore = stats.highScore || 0;
-          const lastScore = stats.lastScore || this.state.score;
-
-          const newHighScore = this.state.score > highScore ? this.state.score : highScore;
-
-          this.setState({
-            highScore: newHighScore,
-            lastScore
-          });
-
-          localStorage.setItem('wordBeaterStats', JSON.stringify({
-            highScore: newHighScore,
-            lastScore
-          }));
-        } else {
-          localStorage.setItem('wordBeaterStats', JSON.stringify({
-            highScore: this.state.score,
-            lastScore: this.state.score
-          }));
-        }
+        this.updateHighScore();
 
         this.setState({ 
           gameOver: true,
@@ -198,27 +193,18 @@ class App extends Component {
     }, 1000);
   };
 
-  // greetings upon correct typed word
-  showGreet = () => {
-    const greets = [
-      'nice!', 'awesome!', 'excellent!', 'fantastic!',
-      'incredible!', 'marvelous!', 'wonderful!', 'incredible!',
-      'amazing!', 'impressive!', 'wowowee!', 'perfect!'
-    ];
-    const random = Math.floor(Math.random() * greets.length);
-
-    this.setState({ greet: greets[random] });
-  };
-
   onTypeHandler = (e) => {
     const input = e.target.value.toLowerCase().trim();
-
-    this.wordTypeInput.setAttribute('maxlength', this.state.currentWord.length);
+   
     this.setState({ typedValue: input });
   };
 
+  setInputMaxLength = () => {
+    this.wordTypeInput.setAttribute('maxlength', this.state.currentWord.length);
+  };
+
   audioHandler = () => {
-    this.setState(prevState => ({ audioMuted: !prevState.audioMuted }));
+    this.setState({ audioMuted: !this.state.audioMuted });
   };
 
   render() {
@@ -230,37 +216,40 @@ class App extends Component {
       countdownFinished
     } = this.state;
 
+    /* eslint-disable no-return-assign */
     return (
-      <div className={isLoaded ? 'beater fadeIn' : 'beater'}>
-        {!isLoaded && <Loader />}
-        {(gameStarted && !countdownFinished) && (
-          <Countdowm initTimer={this.initTimer} />
-        )}
-        {(gameStarted && countdownFinished) && (
-          <React.Fragment>
-            <Game 
-                /* eslint-disable no-return-assign */
-                gameData={this.state}
-                onTypeHandler={this.onTypeHandler}
-                wordTypeInput={el => this.wordTypeInput = el}
-            />
+      <React.Fragment>
+        {isLoaded ? (
+          <div className={isLoaded ? 'beater fadeIn' : 'beater'}>
             <Music 
                 audioHandler={this.audioHandler}
                 audioMuted={audioMuted}
             />
-          </React.Fragment>
+            {(gameStarted && !countdownFinished) && (
+              <Countdowm initTimer={this.initTimer} />
+            )}
+            {(gameStarted && countdownFinished) && (
+              <Game 
+                  gameData={this.state}
+                  onTypeHandler={this.onTypeHandler}
+                  wordTypeInput={el => this.wordTypeInput = el}
+              />
+            )}
+            {gameOver && (
+              <GameOver 
+                  gameData={this.state}
+                  initGame={this.initGame}
+                  quitGame={this.quitGame}
+              />
+            )}
+            {(!gameStarted && !gameOver) && (
+              <MainScreen initGame={this.initGame} />
+            )}
+          </div>
+        ) : (
+          <Loader />
         )}
-        {gameOver && (
-          <GameOver 
-              gameData={this.state}
-              initGame={this.initGame}
-              quitGame={this.quitGame}
-          />
-        )}
-        {(!gameStarted && !gameOver) && (
-          <MainScreen initGame={this.initGame} />
-        )}
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,64 +1,3 @@
-.beater {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-}
-
-.beater__main {
-  width:70%;
-  max-width: 120rem;
-  height: 100%;
-  margin: auto;
-  position: relative;
-  color: #fff;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.beater__main-title {
-  font-size: $font-xxl;
-  font-weight: 900;
-  margin-bottom: $m-size;
-}
-
-.beater__main-subtitle {
-  margin-bottom: 0;
-  line-height: $l-size;
-  @media (min-width: 1024px) {
-    width: 80%;
-  }
-}
-
-.beater__main-actions {
-  display: flex;
-
-  button {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
-
-.beater__main-start-button {
-  text-transform: uppercase;
-  color: #fff;
-  border: none;
-  font-weight: 700;
-  border-radius: 20px;
-  margin-top: $padding-xl;
-  padding: $padding-sm $padding-xl;
-  font-size: $font-xs;
-  @include linearGradient(180deg, $pink, $purple);
-  @include boxShadow($pink);
-}
-
-.beater__main-quit-button {
-  @extend .beater__main-start-button;
-  @include linearGradient(180deg, $orange, $red);
-  @include boxShadow($red);
-}
 
 .beater__game {
   color: #fff;
@@ -94,6 +33,7 @@
   }
 
   h2.showGreet {
+    transform-origin: center;
     @include animation(greet, 1s);
   }
 }
@@ -207,31 +147,26 @@
   }
 }
 
-.beater__gameover {
-  color: #fff;
-  width: 70%;
+
+.beater__countdown {
+  width: 100%;
   height: 100vh;
-  margin: auto;
+  position: absolute;
+  top: 0;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  h2 {
-    margin-bottom: 0;
-  }
 }
 
-.beater__gameover-title {
-  text-align: center;
-  @extend .beater__main-title;
+.beater__countdown-count {
+  font-size: $font-xxl;
+  color: $yellow;
+  @include animation(pulse, 1s, infinite);
 }
 
-.beater__gameover-summary {
-  width: 35rem;
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .beater__audio-control {
   position: absolute;
@@ -272,22 +207,6 @@
   }
 }
 
-.beater__countdown {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.beater__countdown-count {
-  font-size: $font-xxl;
-  @include animation(pulse, 1s, infinite);
-}
 
 .fadeIn {
   @include animation(fadein, .5s);
@@ -307,45 +226,4 @@
 
 .not-matched {
   color: $red;
-}
-
-@include keyframes(greet) {
-  0% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@include keyframes(shrinkGrow) {
-  from {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@include keyframes(plusPoints) {
-  0% {
-    top: 30px;
-    opacity: 0;
-  }
-  50% {
-    top: 0;
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
